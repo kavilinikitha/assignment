@@ -12,7 +12,7 @@ pipeline {
 
         DEPLOY_USER = "ubuntu"
         DEPLOY_HOST = "10.10.1.126"
-        DEPLOY_PATH = "/opt/apps"
+        DEPLOY_PATH = "/home/ubuntu"
 
         SSH_CREDENTIALS = "appserver"
     }
