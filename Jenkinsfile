@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     tools {
+        jdk 'JDK-17'
         maven 'Maven-3.9.11'
     }
 
@@ -27,6 +28,7 @@ pipeline {
         stage('Build & Test') {
             steps {
                 sh '''
+                  java -version
                   mvn -version
                   mvn clean test -DskipTests
                 '''
