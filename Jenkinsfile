@@ -1,17 +1,13 @@
 pipeline {
-    agent any
+    agent { label = 'Built-In Node' }
 
-    tools {
-        jdk 'JDK-21.0.9'
-        maven 'Maven-3.8.7-2'
-    }
 
     environment {
         APP_NAME = "my-app"
         ARTIFACT = "**/*.jar"
 
         DEPLOY_USER = "ubuntu"
-        DEPLOY_HOST = "10.10.1.126"
+        DEPLOY_HOST = "34.205.87.31"
         DEPLOY_PATH = "/home/ubuntu"
 
         SSH_CREDENTIALS = "appserver"
@@ -28,8 +24,7 @@ pipeline {
         stage('Build & Test') {
             steps {
                 sh '''
-                  java -version
-                  mvn -version
+
                   mvn clean test -DskipTests
                 '''
             }
