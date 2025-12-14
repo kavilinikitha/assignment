@@ -1,7 +1,5 @@
-Multibranch Pipeline
- {
-    agent { label 'Built-In Node' }
-
+pipeline {
+    agent any
 
     environment {
         APP_NAME = "my-app"
@@ -24,10 +22,7 @@ Multibranch Pipeline
 
         stage('Build & Test') {
             steps {
-                sh '''
-
-                  mvn clean test -DskipTests
-                '''
+                sh 'mvn clean test -DskipTests'
             }
         }
 
@@ -51,7 +46,7 @@ Multibranch Pipeline
 
         stage('Deploy to Application Server') {
             when {
-                branch 'main'
+                branch 'master'
             }
             steps {
                 sshagent(credentials: ["${SSH_CREDENTIALS}"]) {
