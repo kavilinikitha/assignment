@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven-3.9.11'
+    }
+
     environment {
         APP_NAME = "my-app"
         ARTIFACT = "**/*.jar"
@@ -22,7 +26,10 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                sh 'mvn clean test -DskipTests'
+                sh '''
+                  mvn -version
+                  mvn clean test -DskipTests
+                '''
             }
         }
 
