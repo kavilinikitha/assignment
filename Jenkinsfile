@@ -17,10 +17,9 @@ pipeline {
         // Stage 2: Build & Test
         // -------------------------------
         stage('Build & Test') {
-            agent { label 'maven-agent' }
             steps {
                 echo 'Running Maven tests...'
-                sh 'mvn clean test'
+                sh 'mvn -B clean test'
             }
         }
 
