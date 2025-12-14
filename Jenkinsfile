@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven-3.9.11'
+        jdk 'JDK-21.0.9'
+        maven 'Maven-3.8.7-2'
     }
 
     environment {
@@ -18,21 +19,22 @@ pipeline {
 
     stages {
 
-        /* 1. Checkout Code */
         stage('Checkout Code') {
             steps {
                 checkout scm
             }
         }
 
-        /* 2. Build & Test using Maven */
         stage('Build & Test') {
             steps {
-                sh 'mvn clean test'
+                sh '''
+                  java -version
+                  mvn -version
+                  mvn clean test
+                '''
             }
         }
 
-        /* 3. Security Scan Stage */
         stage('Security Scan') {
             steps {
                 sh '''
@@ -44,7 +46,6 @@ pipeline {
             }
         }
 
-        /* 4. Package Stage */
         stage('Package Application') {
             steps {
                 sh 'mvn package -DskipTests'
@@ -52,7 +53,6 @@ pipeline {
             }
         }
 
-        /* 5. Deploy to Application Server (main branch only) */
         stage('Deploy to Application Server') {
             when {
                 branch 'main'
