@@ -7,8 +7,8 @@ pipeline {
         // Stage 1: Checkout Code
         // -------------------------------
         stage('Checkout Code') {
-            agent { label 'maven-agent' }
             steps {
+                node('maven-agent') {
                 checkout scm
             }
         }
@@ -18,8 +18,8 @@ pipeline {
         // -------------------------------
         stage('Build & Test') {
             steps {
-                echo 'Running Maven tests...'
-                sh 'mvn -B clean test'
+                node('maven-agent){
+                sh 'mvn clean test'
             }
         }
 
