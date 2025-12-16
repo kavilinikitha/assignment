@@ -1,20 +1,7 @@
 pipeline {
     agent any
 
-    environment {
-        APP_NAME    = "springboot-app"
-        APP_DIR     = "/opt/${APP_NAME}"
-        DEPLOY_USER = "ubuntu"
-        DEPLOY_HOST = "34.205.87.31"
-    }
-
-    options {
-        timestamps()
-        disableConcurrentBuilds()
-    }
-
     stages {
-
         stage('Checkout') {
             steps {
                 checkout scm
@@ -25,12 +12,15 @@ pipeline {
             steps {
                 sh 'mvn clean test'
             }
-            post {
-                always {
-                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
-                }
-            }
         }
+    }
+
+    post {
+        always {
+            junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
+        }
+    }
+}
 
         stage('Package JAR') {
             steps {
